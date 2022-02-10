@@ -1,0 +1,14 @@
+service vendor.engpcclientlte /vendor/bin/engpc
+    class core
+    user root
+    group system radio shell net_bt_admin input audio wifi media camera
+    oneshot
+
+on property:vendor.flag.engpc.restart=1
+    restart vendor.engpcclientlte
+
+on property:vendor.ro.bootmode=cali && property:vendor.flag.sys.usb.config=1
+    setprop sys.usb.config adb,vser,gser
+
+on property:vendor.ro.bootmode=cali && property:sys.usb.state=adb,vser,gser
+    setprop vendor.sys.usb.state adb,vser,gser
